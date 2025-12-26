@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pregnancy Care Chatbot</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fdecef;
+  text-align: center;
+}
+
+h2 {
+  color: #c2185b;
+}
+
+.disclaimer {
+  font-size: 12px;
+  color: red;
+}
+
+.chatbox {
+  width: 60%;
+  height: 320px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.bot {
+  text-align: left;
+  background-color: #f8d7da;
+  padding: 8px;
+  margin: 6px;
+  border-radius: 8px;
+}
+
+.user {
+  text-align: right;
+  background-color: #d1e7dd;
+  padding: 8px;
+  margin: 6px;
+  border-radius: 8px;
+}
+
+input {
+  width: 50%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #f06292;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🤰 Pregnancy Care Chatbot</h2>
+<p class="disclaimer">
+⚠️ This chatbot provides general guidance only. Consult a doctor for medical advice.
+</p>
+
+<div class="chatbox" id="chatbox">
+  <div class="bot">Hello 👋 I'm here to help you with pregnancy-related questions.</div>
+</div>
+
+<input type="text" id="userInput" placeholder="Type your question here...">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+function sendMessage() {
+  let input = document.getElementById("userInput");
+  let message = input.value.toLowerCase();
+  let chatbox = document.getElementById("chatbox");
+
+  if (message === "") return;
+
+  chatbox.innerHTML += `<div class="user">${input.value}</div>`;
+
+  let reply = getBotResponse(message);
+
+  chatbox.innerHTML += `<div class="bot">${reply}</div>`;
+
+  input.value = "";
+  chatbox.scrollTop = chatbox.scrollHeight;
+from openai import OpenAI
+
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "I have back pain during pregnancy"}
+    ]
+)
+
+print(response.choices[0].message.content)
+
+
+
+</script>
+
+</body>
+</html>
